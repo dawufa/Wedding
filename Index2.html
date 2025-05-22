@@ -121,6 +121,11 @@
       border-color: #ff9900 !important;
       color: #333;
     }
+    .seating-row {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 8px;
+}
   </style>
 </head>
 <body>
@@ -131,51 +136,51 @@
   <div class="result" id="result"></div>
 
   <!-- 座位表區塊 -->
-  <div id="seatChart">
-    <div class="stage">舞台</div>
-    <div class="table">主桌</div>
-    <div class="seating-grid" aria-label="會場座位圖">
+ <div id="seatChart">
+  <div class="stage">舞台</div>
+  <div class="table">主桌</div>
+  <div class="venue" aria-label="會場座位圖">
+    <div class="seating-row">
       <div class="seat" id="A1">A1</div>
       <div class="seat" id="A2">A2</div>
-      &nbsp;&nbsp;
+      <div class="aisle"></div>
       <div class="seat" id="A3">A3</div>
       <div class="seat" id="A4">A4</div>
-      <div class="aisle"></div>
-      <div class="aisle"></div>
+    </div>
 
+    <div class="seating-row">
       <div class="seat" id="B1">B1</div>
       <div class="seat" id="B2">B2<br><small>漂亮朋朋們</small></div>
-      &nbsp;&nbsp;
+      <div class="aisle"></div>
       <div class="seat" id="B3">B3<br><small>你也好</small></div>
       <div class="seat" id="B4">B4</div>
-      <div class="aisle"></div>
-      <div class="aisle"></div>
+    </div>
 
+    <div class="seating-row">
       <div class="seat" id="C1">C1</div>
       <div class="seat" id="C2">C2<br><small>大學朋朋們</small></div>
-      &nbsp;&nbsp;
+      <div class="aisle"></div>
       <div class="seat" id="C3">C3<br><small>資訊系籃</small></div>
       <div class="seat" id="C4">C4</div>
-      <div class="aisle"></div>
-      <div class="aisle"></div>
+    </div>
 
+    <div class="seating-row">
       <div class="seat" id="D1">D1</div>
       <div class="seat" id="D2">D2<br><small>新勢打球</small></div>
-      &nbsp;&nbsp;
+      <div class="aisle"></div>
       <div class="seat" id="D3">D3<br><small>壢中314</small></div>
       <div class="seat" id="D4">D4</div>
-      <div class="aisle"></div>
-      <div class="aisle"></div>
+    </div>
 
+    <div class="seating-row">
       <div class="seat" id="E1">E1</div>
       <div class="seat" id="E2">E2</div>
-      &nbsp;&nbsp;
+      <div class="aisle"></div>
       <div class="seat" id="E3">E3<br><small>好想進全國</small></div>
       <div class="seat" id="E4">E4</div>
-      <div class="aisle"></div>
-      <div class="aisle"></div>
     </div>
   </div>
+</div>
 
   <script>
     // 座位對應賓客列表
