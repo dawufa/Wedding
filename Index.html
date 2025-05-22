@@ -87,7 +87,7 @@
   <button onclick="searchSeat()">查詢</button>
   <div class="result" id="result"></div>
 
-  <div class="venue">
+  <div class="venue" id="venue">
     <div class="seating-grid" aria-label="會場座位圖">
       <div class="label">舞台</div>
       <div class="label">主桌</div>
@@ -166,7 +166,7 @@
         if (guests.includes(name)) {
           found = true;
           foundTable = table;
-          resultText = `🎉 ${name} 被安排在「<strong>${table}</strong>」桌`;
+          resultText = `🎉 ${name} 被安排在「<strong>${foundTable}</strong>」桌`;
           break;
         }
       }
