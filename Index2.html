@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <title>婚禮座位查詢</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      font-family: sans-serif;
+      background: white;
+      color: #333;
+      text-align: center;
+      padding: 2rem;
+    }
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+    input {
+      padding: 0.5rem;
+      font-size: 1rem;
+      width: 80%;
+      max-width: 300px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    button {
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+      margin-left: 0.5rem;
+      cursor: pointer;
+    }
+    .result {
+      margin-top: 1rem;
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+
+    /* 座位區塊 */
+    .venue {
+      margin: 2rem auto 0;
+      max-width: 400px;
+      font-size: 0.9rem;
+      user-select: none;
+    }
+    .stage {
+      font-weight: bold;
+      margin-bottom: 1rem;
+    }
+    .table {
+      font-weight: bold;
+      margin-bottom: 1rem;
+    }
+    .seating-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 50px);
+      gap: 8px;
+      justify-content: center;
+      margin-top: 0.5rem;
+    }
+    .seat {
+      border: 1px solid #999;
+      padding: 8px 0;
+      border-radius: 6px;
+      background-color: #f9f9f9;
+      transition: background-color 0.3s ease;
+      font-weight: bold;
+      cursor: default;
+    }
+    .aisle {
+      background: transparent;
+      border: none;
+      pointer-events: none;
+    }
+    /* 標示找到的座位 */
+    .highlight {
+      background-color: #ffcc00 !important;
+      border-color: #ff9900 !important;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <h1>婚禮座位查詢</h1>
+  <p>請輸入您的姓名</p>
+  <input type="text" id="nameInput" placeholder="例如：張小美" />
+  <button onclick="searchSeat()">查詢</button>
+  <div class="result" id="result"></div>
+
+  <div class="venue">
+    <div class="stage">舞台</div>
+    <div class="table">主桌</div>
+    <div class="seating-grid" aria-label="會場座位圖">
+      <div class="seat" id="A1">A1</div>
+      <div class="seat" id="A2">A2</div>
+      <div class="seat" id="A3">A3</div>
+      <div class="seat" id="A4">A4</div>
+      <div class="aisle"></div>
+      <div class="aisle"></div>
+
+      <div class="seat" id="B1">B1</div>
+      <div class="seat" id="B2">B2<br><small>漂亮朋朋們</small></div>
+      <div class="seat" id="B3">B3<br><small>你也好</small></div>
+      <div class="seat" id="B4">B4</div>
+      <div class="aisle"></div>
+      <div class="aisle"></div>
+
+      <div class="seat" id="C1">C1</div>
+      <div class="seat" id="C2">C2<br><small>大學朋朋們</small></div>
+      <div class="seat" id="C3">C3<br><small>資訊系籃</small></div>
+      <div class="seat" id="C4">C4</div>
+      <div class="aisle"></div>
+      <div class="aisle"></div>
+
+      <div class="seat" id="D1">D1</div>
+      <div class="seat" id="D2">D2<br><small>新勢打球</small></div>
+      <div class="seat" id="D3">D3<br><small>壢中314</small></div>
+      <div class="seat" id="D4">D4</div>
+      <div class="aisle"></div>
+      <div class="aisle"></div>
+
+      <div class="seat" id="E1">E1</div>
+      <div class="seat" id="E2">E2</div>
+      <div class="seat" id="E3">E3<br><small>好想進全國</small></div>
+      <div class="seat" id="E4">E4</div>
+      <div class="aisle"></div>
+      <div class="aisle"></div>
+    </div>
+  </div>
+
+  <script>
+    // 座位群組和名字對應
+    const seatMap = {
+      "漂亮朋朋們": ["郭芷伶", "莊佳珮", "蘇旆彤", "王筱嬿", "陳心綸", "廖禹彤", "柯懿珊"],
+      "大學朋朋們": ["蔡以庭", "黃菁宜", "廖梓揚", "蔡雨諠", "陳奕斌"],
+      "你也好": ["陳楷新", "張揚晨", "陳彥良", "林子桓", "劉耕嘉", "鄭葦哲", "沈柏翰"],
+      "資訊系籃": ["吳忠霖", "陳永松", "劉宇晉", "梁守鎰", "劉文豪", "胡智強", "謝佑昀", "黎立宣 AKA佑昀是小狗"],
+      "中壢高中14班": ["陳曦", "劉姿岑", "辛芳妤", "許家瑋", "李柏叡", "邱昱勛", "彭奕傑", "邱繹洺", "林子平", "王興勝"],
+      "好想進全國": ["林廷謙", "陳柏瑋aka大巫最好的兄弟", "品均", "胡創治", "張荐期", "李彥廷", "邱冠儒", "林致宇", "王復生", "林綦駿"],
+      "新勢打球": ["羅富承", "徐榮靖", "廖啓舜", "胡睿秀", "呂學沅", "林瑋", "廖弟", "漢逢"]
+    };
+
+    // 座位群組對應會場位置座位ID
+    const tableSeatId = {
+      "漂亮朋朋們": "B2",
+      "大學朋朋們": "C2",
+      "你也好": "B3",
+      "資訊系籃": "C3",
+      "中壢高中14班": "D3",
+      "好想進全國": "E3",
+      "新勢打球": "D2"
+    };
+
+    function searchSeat() {
+      const name = document.getElementById("nameInput").value.trim();
+      let found = false;
+      let foundTable = "";
+      let resultText = "查無此姓名，請再確認一次唷！";
+
+      // 清除之前的標示
+      for (const seatId of Object.values(tableSeatId)) {
+        const seatElem = document.getElementById(seatId);
+        seatElem.classList.remove("highlight");
+      }
+
+      // 找名字對應的桌
+      for (const [table, guests] of Object.entries(seatMap)) {
+        if (guests.includes(name)) {
+          found = true;
+          foundTable = table;
+          resultText = `🎉 ${name} 被安排在「<strong>${table}</strong>」桌`;
+          break;
+        }
+      }
+
+      // 高亮座位圖
+      if (found) {
+        const seatId = tableSeatId[foundTable];
+        if (seatId) {
+          document.getElementById(seatId).classList.add("highlight");
+        }
+      }
+
+      document.getElementById("result").innerHTML = resultText;
+    }
+  </script>
+</body>
+</html>
