@@ -45,19 +45,24 @@
     }
     .seating-grid {
       display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 8px;
+      grid-template-columns: repeat(5, 70px);
+      gap: 10px;
       justify-content: center;
       margin-top: 0.5rem;
     }
     .seat, .label {
-      border: 1px solid #999;
-      padding: 8px 0;
-      border-radius: 6px;
-      background-color: #f9f9f9;
-      transition: background-color 0.3s ease;
-      font-weight: bold;
-      cursor: default;
+        width: 60px;
+  height: 60px;
+  border: 1px solid #999;
+  border-radius: 50%;
+  background-color: #f9f9f9;
+  transition: background-color 0.3s ease;
+  font-weight: bold;
+  text-align: center;
+  line-height: 60px;
+  overflow: hidden;
+  font-size: 0.9rem;
+  padding: 0;
     }
     .aisle {
       background: transparent;
@@ -107,7 +112,7 @@
       <div class="seat" id="B3">你也好<br></div>
       <div class="seat" id="B4"></div>
 
-      <div class="seat" id="C1">C1</div>
+      <div class="seat" id="C1"></div>
       <div class="seat" id="C2">大學朋朋們<br></div>
       <div class="aisle"></div>
      
@@ -119,7 +124,7 @@
       <div class="aisle"></div>
       
       <div class="seat" id="D3">壢中314<br></div>
-      <div class="seat" id="D4">D4</div>
+      <div class="seat" id="D4"></div>
 
       <div class="seat" id="E1"></div>
       <div class="seat" id="E2"></div>
