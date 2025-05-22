@@ -41,6 +41,7 @@
       max-width: 600px;
       font-size: 0.9rem;
       user-select: none;
+       display: none; /* 初始隱藏 */
     }
     .seating-grid {
       display: grid;
@@ -175,6 +176,7 @@
         if (seatId) {
           document.getElementById(seatId).classList.add("highlight");
         }
+         document.getElementById("venue").style.display = "block"; // 顯示座位圖
       }
 
       document.getElementById("result").innerHTML = resultText;
