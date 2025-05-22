@@ -41,14 +41,18 @@
       max-width: 600px;
       font-size: 0.9rem;
       user-select: none;
-       display: none; /* 初始隱藏 */
+      display: none; /* 初始隱藏 */
+      overflow-x: auto;       /* 允許橫向滾動 */
+      -webkit-overflow-scrolling: touch; /* 手機上更順滑 */
     }
-    .seating-grid {
+    
+   .seating-grid {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
       gap: 8px;
       justify-content: center;
       margin-top: 0.5rem;
+      width: max-content;     /* 讓 grid 不會被父層限制寬度 */
     }
     .seat{
         width: 100px;
