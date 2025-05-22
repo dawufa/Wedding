@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>婚禮座位查詢</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      font-family: sans-serif;
+      background: white;
+      color: #333;
+      text-align: center;
+      padding: 2rem;
+    }
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+    input {
+      padding: 0.5rem;
+      font-size: 1rem;
+      width: 80%;
+      max-width: 300px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    button {
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+      margin-left: 0.5rem;
+      cursor: pointer;
+    }
+    .result {
+      margin-top: 2rem;
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>婚禮座位查詢</h1>
+  <p>請輸入您的姓名</p>
+  <input type="text" id="nameInput" placeholder="例如：張小美">
+  <button onclick="searchSeat()">查詢</button>
+  <div class="result" id="result"></div>
+
+  <script>
+    const seatMap = {
+      "漂亮朋朋們": ["郭芷伶", "莊佳珮", "蘇旆彤", "王筱嬿", "陳心綸", "廖禹彤", "柯懿珊"],
+      "大學朋朋們": ["蔡以庭", "黃菁宜", "廖梓揚", "蔡雨諠", "陳奕斌"],
+      "你也好": ["陳楷新", "張揚晨", "陳彥良", "林子桓", "劉耕嘉", "鄭葦哲", "沈柏翰"],
+      "資訊系籃": ["吳忠霖", "陳永松", "劉宇晉", "梁守鎰", "劉文豪", "胡智強", "謝佑昀", "黎立宣 AKA佑昀是小狗"],
+      "中壢高中14班": ["陳曦", "劉姿岑", "辛芳妤", "許家瑋", "李柏叡", "邱昱勛", "彭奕傑", "邱繹洺", "林子平", "王興勝"],
+      "好想進全國": ["林廷謙", "陳柏瑋aka大巫最好的兄弟", "品均", "胡創治", "張荐期", "李彥廷", "邱冠儒", "林致宇", "王復生", "林綦駿"],
+      "新勢打球": ["羅富承", "徐榮靖", "廖啓舜", "胡睿秀", "呂學沅", "林瑋", "廖弟", "漢逢"]
+    };
+
+    function searchSeat() {
+      const name = document.getElementById("nameInput").value.trim();
+      let found = false;
+      let resultText = "查無此姓名，請再確認一次唷！";
+      for (const [table, guests] of Object.entries(seatMap)) {
+        if (guests.includes(name)) {
+          resultText = `🎉 ${name} 被安排在「<strong>${table}</strong>」桌`;
+          found = true;
+          break;
+        }
+      }
+      document.getElementById("result").innerHTML = resultText;
+    }
+  </script>
+</body>
+</html>
